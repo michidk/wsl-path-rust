@@ -1,5 +1,5 @@
 # wslpath2
-[![MIT License](https://img.shields.io/crates/l/wslpath2)](https://choosealicense.com/licenses/mit/) [![Continuous integration](https://github.com/michidk/wslpath2/workflows/Continuous%20Integration/badge.svg)](https://github.com/michidk/wslpath2/actions) [![rust docs](https://docs.rs/wslpath2/badge.svg)](https://docs.rs/wslpath2/latest/wslpath2/)  
+[![MIT License](https://img.shields.io/crates/l/wslpath2)](https://choosealicense.com/licenses/mit/) [![Crates.io](https://img.shields.io/crates/v/wslpath2)](https://crates.io/crates/wslpath2) [![rust docs](https://docs.rs/wslpath2/badge.svg)](https://docs.rs/wslpath2/latest/wslpath2/) [![Continuous integration](https://github.com/michidk/wslpath2/workflows/Continuous%20Integration/badge.svg)](https://github.com/michidk/wslpath2/actions)
 
 You can use `wslpath2` to convert a WSL Path to a Windows Path and vice versa.
 Internally it calls the `wslpath.exe` utility which is a Linux-based utility created by Microsoft to convert Windows and Linux paths.
