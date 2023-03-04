@@ -12,7 +12,13 @@ fn main() {
     // OUTPUT is WSL Path converted to Windows is C:\Users
 
     // Convert WSL path to Windows Linux Style
-    let path = convert("/mnt/c/Users", None, Conversion::WslToWindowsLinuxStyle, false).unwrap();
+    let path = convert(
+        "/mnt/c/Users",
+        None,
+        Conversion::WslToWindowsLinuxStyle,
+        false,
+    )
+    .unwrap();
     println!("WSL Path converted to Windows is {}", path);
     // OUTPUT is WSL Path converted to Windows is C:/Users
 }

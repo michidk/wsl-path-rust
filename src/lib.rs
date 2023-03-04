@@ -25,13 +25,11 @@ pub fn convert(
 
     // Select path arg
     // Based on this conversion takes place
-    args.push(
-        match options {
-            Conversion::WindowsToWsl => "-u",
-            Conversion::WslToWindows => "-w",
-            Conversion::WslToWindowsLinuxStyle => "-m",
-        }
-    );
+    args.push(match options {
+        Conversion::WindowsToWsl => "-u",
+        Conversion::WslToWindows => "-w",
+        Conversion::WslToWindowsLinuxStyle => "-m",
+    });
 
     // force absolute path arg
     if force_absolute_path {
@@ -59,32 +57,49 @@ mod tests {
 
     #[test]
     fn test_wsl_to_windows() {
-        assert_eq!(convert("/mnt/c", None, Conversion::WslToWindows, false).unwrap_or_default(), "C:\\");
+        assert_eq!(
+            convert("/mnt/c", None, Conversion::WslToWindows, false).unwrap_or_default(),
+            "C:\\"
+        );
     }
 
     #[test]
     fn test_wsl_to_windows_absolute() {
-        assert_eq!(convert("/mnt/c", None, Conversion::WslToWindows, true).unwrap_or_default(), "C:\\");
+        assert_eq!(
+            convert("/mnt/c", None, Conversion::WslToWindows, true).unwrap_or_default(),
+            "C:\\"
+        );
     }
 
     #[test]
     fn test_wsl_to_windows_linux_style() {
-        assert_eq!(convert("/mnt/c", None, Conversion::WslToWindowsLinuxStyle, false).unwrap_or_default(), "C:/");
+        assert_eq!(
+            convert("/mnt/c", None, Conversion::WslToWindowsLinuxStyle, false).unwrap_or_default(),
+            "C:/"
+        );
     }
 
     #[test]
     fn test_wsl_to_windows_linux_style_absolute() {
-        assert_eq!(convert("/mnt/c", None, Conversion::WslToWindowsLinuxStyle, true).unwrap_or_default(), "C:/");
+        assert_eq!(
+            convert("/mnt/c", None, Conversion::WslToWindowsLinuxStyle, true).unwrap_or_default(),
+            "C:/"
+        );
     }
 
     #[test]
     fn test_windows_to_wsl() {
-        assert_eq!(convert("C:/", None, Conversion::WindowsToWsl, false).unwrap_or_default(), "/mnt/c/");
+        assert_eq!(
+            convert("C:/", None, Conversion::WindowsToWsl, false).unwrap_or_default(),
+            "/mnt/c/"
+        );
     }
 
     #[test]
     fn test_windows_to_wsl_absolute() {
-        assert_eq!(convert("C:/", None, Conversion::WindowsToWsl, true).unwrap_or_default(), "/mnt/c/");
+        assert_eq!(
+            convert("C:/", None, Conversion::WindowsToWsl, true).unwrap_or_default(),
+            "/mnt/c/"
+        );
     }
-
 }
