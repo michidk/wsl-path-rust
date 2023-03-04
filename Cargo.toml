@@ -10,7 +10,7 @@ documentation = "https://github.com/michidk/wslpath2#readme"
 homepage = "https://github.com/michidk/wslpath2"
 license = "MIT"
 keywords = ["wsl", "windows", "path", "convert"]
-categories = ["filesystem::path", "os::windows", "os::unix"]
+categories = ["filesystem", "os::windows-apis", "os::unix-apis"]
 
 [lib]
 name = "wslpath2"
