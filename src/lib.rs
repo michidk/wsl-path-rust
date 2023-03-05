@@ -1,13 +1,48 @@
+//! Convert Windows paths to WSL paths and vice versa
+//!
+//! # Example
+//!
+//! ```
+//! use wslpath2::{convert, Conversion};
+//!
+//! let path = convert("/mnt/c", None, Conversion::WslToWindows, false).unwrap_or_default();
+//!
+//! assert_eq!(path, "C:\\");
+//! ```
+
+#![warn(missing_docs)]
+
 use std::process::Command;
 
-/// wslpath conversion arguments
+/// Type of conversion to perform
+#[derive(Debug)]
 pub enum Conversion {
+    /// Convert Windows path to WSL path
     WindowsToWsl,
+    /// Convert WSL path to Windows path
     WslToWindows,
+    /// Convert WSL path to Windows path using Linux style path separators
     WslToWindowsLinuxStyle,
 }
 
-/// Convert Paths using the WSLPath Executable
+/// Convert Paths using the `wslpath`
+///
+/// # Arguments
+///
+/// * `path` - The path to convert
+/// * `distro` - The distro to use for conversion (when calling from Windows) [optional]
+/// * `options` - The type of conversion to perform
+/// * `force_absolute_path` - Force the path to be absolute
+///
+/// # Example
+///
+/// ```
+/// use wslpath2::{convert, Conversion};
+///
+/// let path = convert("/mnt/c", None, Conversion::WslToWindows, false).unwrap_or_default();
+///
+/// assert_eq!(path, "C:\\");
+/// ```
 pub fn convert(
     path: &str,
     distro: Option<&str>,
