@@ -74,14 +74,18 @@ pub fn convert(
     let cmd = Command::new("wsl.exe")
         .args(args)
         .arg(path.replace('\\', "\\\\"))
-        .output()?;
+        .output()
+        .map_err(|e| format!("Error executing wsl.exe: {}", e))?;
 
     let code = cmd.status.code().unwrap_or(-1);
     if code != 0 {
         return Err(format!("Error getting wslpath: {}", code).into());
     }
 
-    Ok(std::str::from_utf8(&cmd.stdout)?.trim().to_string())
+    Ok(std::str::from_utf8(&cmd.stdout)
+        .map_err(|e| format!("Error converting output to string: {}", e))?
+        .trim()
+        .to_string())
 }
 
 #[cfg(test)]
