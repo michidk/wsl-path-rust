@@ -98,9 +98,9 @@ pub fn convert(
     }
 
     Ok(std::str::from_utf8(&output.stdout)
-         .map_err(|e| format!("Error converting output to string: {}", e))?
-         .trim()
-         .to_string())
+        .map_err(|e| format!("Error converting output to string: {}", e))?
+        .trim()
+        .to_string())
 }
 
 #[cfg(test)]
