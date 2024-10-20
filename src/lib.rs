@@ -14,6 +14,9 @@
 
 use std::process::Command;
 
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
+
 /// Type of conversion to perform
 #[derive(Debug)]
 pub enum Conversion {
@@ -71,18 +74,30 @@ pub fn convert(
         args.push("-a");
     }
 
-    let cmd = Command::new("wsl.exe")
-        .args(args)
-        .arg(path.replace('\\', "\\\\"))
+    let mut cmd = Command::new("wsl.exe");
+    cmd.args(args);
+    cmd.arg(path.replace('\\', "\\\\"));
+
+    // Disable window creation on Windows
+    //
+    // This is necessary to prevent a command prompt window from being shown for a short time,
+    // which is likely undesired, especially for GUI applications.
+    //
+    // The flags are documented here:
+    // https://learn.microsoft.com/en-us/windows/win32/procthread/process-creation-flags#flags
+    #[cfg(windows)]
+    cmd.creation_flags(0x08000000); // CREATE_NO_WINDOW
+
+    let output = cmd
         .output()
         .map_err(|e| format!("Error executing wsl.exe: {}", e))?;
 
-    let code = cmd.status.code().unwrap_or(-1);
+    let code = output.status.code().unwrap_or(-1);
     if code != 0 {
         return Err(format!("Error getting wslpath: {}", code).into());
     }
 
-    Ok(std::str::from_utf8(&cmd.stdout)
+    Ok(std::str::from_utf8(&output.stdout)
         .map_err(|e| format!("Error converting output to string: {}", e))?
         .trim()
         .to_string())
