@@ -73,7 +73,7 @@ pub fn convert(
     if force_absolute_path {
         args.push("-a");
     }
-  
+
     let mut cmd = Command::new("wsl.exe");
     cmd.args(args);
     cmd.arg(path.replace('\\', "\\\\"));
@@ -96,11 +96,11 @@ pub fn convert(
     if code != 0 {
         return Err(format!("Error getting wslpath: {}", code).into());
     }
-    
+
     Ok(std::str::from_utf8(&output.stdout)
-       .map_err(|e| format!("Error converting output to string: {}", e))?
-       .trim()
-       .to_string())
+         .map_err(|e| format!("Error converting output to string: {}", e))?
+         .trim()
+         .to_string())
 }
 
 #[cfg(test)]
