@@ -88,14 +88,19 @@ pub fn convert(
     #[cfg(windows)]
     cmd.creation_flags(0x08000000); // CREATE_NO_WINDOW
 
-    let output = cmd.output().map_err(|e| format!("Error executing wsl.exe: {}", e))?;
+    let output = cmd
+        .output()
+        .map_err(|e| format!("Error executing wsl.exe: {}", e))?;
 
     let code = output.status.code().unwrap_or(-1);
     if code != 0 {
         return Err(format!("Error getting wslpath: {}", code).into());
     }
     
-    Ok(std::str::from_utf8(&output.stdout).map_err(|e| format!("Error converting output to string: {}", e))?.trim().to_string())
+    Ok(std::str::from_utf8(&output.stdout)
+       .map_err(|e| format!("Error converting output to string: {}", e))?
+       .trim()
+       .to_string())
 }
 
 #[cfg(test)]
