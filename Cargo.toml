@@ -1,6 +1,6 @@
 [package]
 name = "wslpath2"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 authors = ["Pratik Chowdhury <pratikc@live.co.uk>", "Michael Lohr <michael@lohr.dev>"]
 description = "Convert Windows to WSL paths and vice-versa"
